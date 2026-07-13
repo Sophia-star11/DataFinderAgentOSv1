@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    padding: 20px;
+}
+.login-box {
+    width: 100%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    overflow: hidden;
+    display: flex;
+}
+.login-left {
+    flex: 1;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    padding: 60px 50px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.login-right {
+    flex: 1;
+    padding: 60px 50px;
+    background: #f8fafc;
+}
+.login-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+.login-logo-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1e293b;
+}
+.login-desc {
+    color: #64748b;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+.login-input-group {
+    margin-bottom: 20px;
+}
+.login-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #334155;
+}
+.layui-input {
+    height: 44px;
+    border-radius: 8px;
+    border-color: #e2e8f0;
+    padding-left: 40px;
+}
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+.login-btn {
+    width: 100%;
+    height: 44px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+}
+.login-btn:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+}
+.login-error {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+}
+.login-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+}
+.left-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.left-desc {
+    font-size: 14px;
+    opacity: .9;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+.left-features {
+    margin-top: 20px;
+}
+.left-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,.1);
+    border-radius: 8px;
+}
+@media screen and (max-width: 768px) {
+    .login-box {
+        flex-direction: column;
+    }
+    .login-left {
+        padding: 40px 30px;
+    }
+    .login-right {
+        padding: 40px 30px;
+    }
+}
+</style>
+<div class="login-container">
+    <div class="login-box">
+        <div class="login-left">
+            <div class="login-logo">
+                <div class="login-logo-icon">
+                    <i class="layui-icon layui-icon-chart-screen" style="font-size: 24px; color: #fff;"></i>
+                </div>
+                <span style="font-size: 18px; font-weight: 600;">智能瞭望与问数系统</span>
+            </div>
+            <div class="left-title">数据洞察<br>智能决策</div>
+            <div class="left-desc">
+                面向科技企业与政务行业的智能数据分析平台，提供全方位的数据监测与智能问答服务，助力高效决策。
+            </div>
+            <div class="left-features">
+                <div class="left-feature-item">
+                    <i class="layui-icon layui-icon-form"></i>
+                    <span>数据采集与管理</span>
+                </div>
+                <div class="left-feature-item">
+                    <i class="layui-icon layui-icon-component"></i>
+                    <span>智能分析与可视化</span>
+                </div>
+                <div class="left-feature-item">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <span>完善的权限控制</span>
+                </div>
+            </div>
+        </div>
+        <div class="login-right">
+            <div class="login-title">欢迎登录</div>
+            <div class="login-desc">请输入您的账号信息以访问系统</div>
+            {% if error %}
+            <div class="login-error">
+                <i class="layui-icon layui-icon-close-fill"></i>
+                {{ error }}
+            </div>
+            {% end %}
+            <form method="post">
+                {% module xsrf_form_html() %}
+                <div class="login-input-group">
+                    <label>用户名</label>
+                    <div style="position: relative;">
+                        <i class="layui-icon layui-icon-username input-icon"></i>
+                        <input type="text" name="username" class="layui-input" placeholder="请输入用户名" required>
+                    </div>
+                </div>
+                <div class="login-input-group">
+                    <label>密码</label>
+                    <div style="position: relative;">
+                        <i class="layui-icon layui-icon-password input-icon"></i>
+                        <input type="password" name="password" class="layui-input" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+                    <input type="checkbox" name="remember" lay-skin="primary" title="记住我">
+                    <a href="#" style="color: #2563eb; font-size: 13px;">忘记密码?</a>
+                </div>
+                <button type="submit" class="layui-btn login-btn">登 录</button>
+            </form>
+            <div class="login-footer">
+                登录即表示您同意 <a href="#" style="color: #2563eb;">用户协议</a> 和 <a href="#" style="color: #2563eb;">隐私政策</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+{% block script %}
+<script>
+layui.use(['form', 'layer'], function() {
+    var form = layui.form;
+    var layer = layui.layer;
+});
+</script>
+{% end %}

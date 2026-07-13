@@ -1,0 +1,51 @@
+import tornado.web
+
+from app.controllers.base import BaseHandler
+from app.models.user import UserRepository
+
+class LoginHandler(BaseHandler):
+    def get(self):
+        self.render("login.html",title="登录页面",error=None)
+
+    def post(self):
+        username = self.get_body_argument("username")
+        password = self.get_body_argument("password")
+        if not username or not password:
+            self.set_status(400)
+            return self.render("login.html",title="登录页面",error="用户名或密码不能为空")
+        
+        if not UserRepository.verify_user(username,password):
+            self.set_status(401)
+            return self.render("login.html",title="登录页面",error="用户名或密码错误")
+        
+        self.set_secure_cookie("username", username)
+        self.redirect("/index")
+
+class LogoutHandler(BaseHandler):
+    def post(self):
+        self.clear_cookie("username")
+        self.redirect("/")
+
+class AdminLoginHandler(BaseHandler):
+    def get(self):
+        self.render("admin/login.html",title="后台登录",error=None)
+
+    def post(self):
+        username = self.get_body_argument("username")
+        password = self.get_body_argument("password")
+        if not username or not password:
+            self.set_status(400)
+            return self.render("admin/login.html",title="后台登录",error="用户名或密码不能为空")
+        
+        if not UserRepository.verify_user(username,password):
+            self.set_status(401)
+            return self.render("admin/login.html",title="后台登录",error="用户名或密码错误")
+        
+        self.set_secure_cookie("username", username)
+        self.redirect("/admin/index")
+
+class AdminLogoutHandler(BaseHandler):
+    @tornado.web.authenticated
+    def post(self):
+        self.clear_cookie("username")
+        self.redirect("/admin/")

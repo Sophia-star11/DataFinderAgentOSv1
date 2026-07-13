@@ -1,0 +1,358 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.layui-layout-admin .layui-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.layui-layout-admin .layui-logo {
+    color: #fff !important;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 20px;
+}
+.layui-layout-admin .layui-logo i {
+    font-size: 26px;
+}
+.layui-header .layui-nav {
+    background: transparent;
+}
+.layui-header .layui-nav .layui-nav-item a {
+    color: rgba(255,255,255,.85);
+}
+.layui-header .layui-nav .layui-nav-item a:hover {
+    color: #fff;
+}
+.layui-header .layui-nav .layui-nav-item.layui-this a {
+    color: #fff;
+}
+.layui-side {
+    background: #1e293b;
+    top: 60px;
+}
+.layui-side-scroll {
+    width: 220px;
+}
+.layui-nav-tree {
+    background: transparent;
+}
+.layui-nav-tree .layui-nav-item a {
+    color: rgba(255,255,255,.75);
+    height: 46px;
+    line-height: 46px;
+}
+.layui-nav-tree .layui-nav-item a:hover {
+    background: rgba(255,255,255,.08);
+    color: #fff;
+}
+.layui-nav-tree .layui-nav-item.layui-this a {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+}
+.layui-nav-tree .layui-nav-child a {
+    color: rgba(255,255,255,.7);
+}
+.layui-nav-tree .layui-nav-child a:hover {
+    color: #fff;
+}
+.layui-body {
+    top: 60px;
+    left: 220px;
+    background: #f1f5f9;
+    padding: 20px;
+}
+.layui-footer {
+    left: 220px;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    text-align: center;
+    line-height: 50px;
+}
+.dashboard-header {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.dashboard-header h2 {
+    font-size: 22px;
+    color: #1e293b;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.dashboard-header p {
+    color: #64748b;
+    font-size: 14px;
+}
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.dashboard-card {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+.card-icon.blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #fff;
+}
+.card-icon.green {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #fff;
+}
+.card-icon.purple {
+    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    color: #fff;
+}
+.card-icon.orange {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: #fff;
+}
+.card-info h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+.card-info p {
+    font-size: 14px;
+ color: #64748b;
+}
+.dashboard-panel {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.dashboard-panel h3 {
+    font-size: 16px;
+    color: #1e293b;
+    margin-bottom: 20px;
+    font-weight: 600;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+@media screen and (max-width: 768px) {
+    .layui-body {
+        left: 0;
+    }
+    .layui-footer {
+        left: 0;
+    }
+}
+</style>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <i class="layui-icon layui-icon-chart-screen"></i>
+            智能瞭望与问数后台
+        </div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-notice"></i>
+                    <span class="layui-badge-dot"></span>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-username"></i>
+                    {{ username }}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">个人信息</a></dd>
+                    <dd><a href="javascript:;">修改密码</a></dd>
+                    <dd><a href="/admin/" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="side-nav">
+                <li class="layui-nav-item layui-this">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-home"></i>
+                        控制台
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-user"></i>
+                        用户管理
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">用户列表</a></dd>
+                        <dd><a href="javascript:;">角色管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-form"></i>
+                        数据管理
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">采集管理</a></dd>
+                        <dd><a href="javascript:;">数据列表</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-chart-screen"></i>
+                        可视化
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">数智大屏</a></dd>
+                        <dd><a href="javascript:;">舆情大屏</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-set"></i>
+                        系统设置
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">系统配置</a></dd>
+                        <dd><a href="javascript:;">菜单管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div class="dashboard-header">
+            <h2>欢迎回来，{{ username }}!</h2>
+            <p>这是系统控制台，您可以快速了解系统运行状态。</p>
+        </div>
+
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <div class="card-icon blue">
+                    <i class="layui-icon layui-icon-user"></i>
+                </div>
+                <div class="card-info">
+                    <h3>128</h3>
+                    <p>用户总数</p>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon green">
+                    <i class="layui-icon layui-icon-form"></i>
+                </div>
+                <div class="card-info">
+                    <h3>2,456</h3>
+                    <p>数据记录</p>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon purple">
+                    <i class="layui-icon layui-icon-component"></i>
+                </div>
+                <div class="card-info">
+                    <h3>89</h3>
+                    <p>采集任务</p>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-icon orange">
+                    <i class="layui-icon layui-icon-chart-screen"></i>
+                </div>
+                <div class="card-info">
+                    <h3>24</h3>
+                    <p>智能模型</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-panel">
+            <h3>系统概览</h3>
+            <blockquote class="layui-elem-quote">
+                当前系统运行正常，所有服务状态良好。数据采集任务每日定时执行，您可以在"数据管理"中查看采集情况。
+            </blockquote>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="200">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>项目</th>
+                        <th>状态</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>数据库服务</td>
+                        <td><span class="layui-badge layui-bg-green">正常</span></td>
+                        <td>SQLite 数据库运行正常，连接稳定</td>
+                    </tr>
+                    <tr>
+                        <td>数据采集服务</td>
+                        <td><span class="layui-badge layui-bg-green">正常</span></td>
+                        <td>今日已完成 24 次数据采集任务</td>
+                    </tr>
+                    <tr>
+                        <td>模型引擎服务</td>
+                        <td><span class="layui-badge layui-bg-green">正常</span></td>
+                        <td>所有智能模型正常加载</td>
+                    </tr>
+                    <tr>
+                        <td>系统安全</td>
+                        <td><span class="layui-badge layui-bg-blue">正常</span></td>
+                        <td>安全防护已启用，最新漏洞已修复</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        © 2024 智能瞭望与问数系统 - 政务数据智能分析平台
+    </div>
+</div>
+
+<form id="admin-logout-form" method="post" action="/admin/logout" style="display: none;">
+    {% module xsrf_form_html() %}
+</form>
+{% end %}
+
+{% block script %}
+<script>
+layui.use(['element', 'layer'], function() {
+    var element = layui.element;
+    var layer = layui.layer;
+});
+</script>
+{% end %}

@@ -1,0 +1,1 @@
+console.log("公共js加载完成")

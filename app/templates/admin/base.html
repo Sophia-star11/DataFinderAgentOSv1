@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or "智能瞭望与问数后台" }}</title>
+    <link rel="stylesheet" href="{{ static_url('dist/layui/css/layui.css') }}">
+    <link rel="stylesheet" href="{{ static_url('css/base.css') }}">
+</head>
+<body>
+{% block body %}{% end %}
+
+<script src="{{ static_url('dist/layui/layui.js') }}"></script>
+{% block script %}{% end %}
+</body>
+</html>
